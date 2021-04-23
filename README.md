@@ -1,8 +1,31 @@
 # Pagination
 
-Pagination modules used to handle server-side pagination.
+Swift package module used to handle server-side pagination.
 
-## Requirement
+## Content
+
+- [Version](#version)
+- [Installation](#installation)
+- [Additional settings](#additional-settings)
+- [License](#license)
+- [Author](#author)
+
+## Version
+
+1.0.0
+
+## Installation
+
+### Swift Package Manager
+
+1. In Xcode go to File -> Swift Packages -> Add Package Dependency...
+2. Select main module
+3. Search for URL `https://github.com/LooseMarek/Pagination`
+4. Select -> Rules -> Version -> Up to Next Major 1.0.0 < 2.0.0
+
+## Usage
+
+### Requirements
 
 Both `loadNextPage()` and `setTotalPages(totalPages)` should be called before performing `canLoadNextPage()` check. See: Usage for implementation.
 
@@ -12,21 +35,19 @@ You can set `setTotalPages(totalPages)` in the callback of the initial fetch cal
 
 If the API don't provide `totalPages` in the response but returns total results count and results per fetch, you will need to manually calculate this from those values e.g. `totalPages = totalResults / resultsPerFetch`. 
 
-## Usage
-
-#### Import module on top of your class
+### Import module on top of your class
 
 ```
 import Pagination
 ```
 
-#### Initalize pagination
+### Initalize pagination
 
 ```
 let pagination: PaginationProtocol = Pagination()
 ```
 
-#### Use when fetching pagination data
+### Use when fetching pagination data
 
 ```
 func fetch() {
@@ -50,7 +71,7 @@ Which will:
 3. Mark call as done with `finishedLoadingNextPage()` in a callback of the fetch
 4. Set total available pages with `setTotalPages(response.totalPages)` if we have response
 
-#### Use in your `tableView cellForRowAt`
+### Use in your `tableView cellForRowAt`
 
 ```
 do {
@@ -77,3 +98,12 @@ setPercentageScrollToLoadNextPage(_ percentageScroll: Double)
 ```
 
 `percentageScroll` value should be greater than 30% (0.3) and less than 100% (1.0). If you will try to set the value bellow or above allowed percentage it will set to 30% and 100% respectively.
+
+## License
+
+**Pagination** is available under the MIT license.
+
+## Author
+
+Marek Loose
+
