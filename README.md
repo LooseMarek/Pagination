@@ -11,6 +11,7 @@ Swift package module used to handle server-side pagination.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Additional settings](#additional-settings)
+- [Testing](#testing)
 - [Author](#author)
 
 ## Installation
@@ -98,6 +99,29 @@ setPercentageScrollToLoadNextPage(_ percentageScroll: Double)
 ```
 
 `percentageScroll` value should be greater than 30% (0.3) and less than 100% (1.0). If you will try to set the value bellow or above allowed percentage it will set to 30% and 100% respectively.
+
+## Testing
+
+Module is run with GitHub Actions everytime the new commit is pushed to the remote branch `master`. The testing includes:
+
+- building the project
+- running unit tests
+
+You can also do that locally by running below commands in terminal:
+
+Build:
+
+```
+xcodebuild -scheme 'Pagination' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=15.0' build
+```
+
+Test:
+
+```
+xcodebuild -scheme 'Pagination' -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=15.0' test
+```
+
+Note: The commands above are running with iPhone 11 but you can use any iOS devices you like.
 
 ## Author
 
