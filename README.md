@@ -1,5 +1,9 @@
 # Pagination
 
+![version tag](https://img.shields.io/github/v/tag/LooseMarek/Pagination) ![language](https://img.shields.io/github/languages/top/LooseMarek/Pagination) ![license](https://img.shields.io/github/license/LooseMarek/Pagination)
+
+![build and test workflow](https://github.com/LooseMarek/Pagination/actions/workflows/build_and_test.yml/badge.svg) ![issues](https://img.shields.io/github/issues/LooseMarek/Pagination)
+
 Swift package module used to handle server-side pagination.
 
 ## Content
