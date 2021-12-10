@@ -8,15 +8,9 @@ Swift package module used to handle server-side pagination.
 
 ## Content
 
-- [Version](#version)
 - [Installation](#installation)
 - [Additional settings](#additional-settings)
-- [License](#license)
 - [Author](#author)
-
-## Version
-
-1.0.0
 
 ## Installation
 
@@ -102,10 +96,6 @@ setPercentageScrollToLoadNextPage(_ percentageScroll: Double)
 ```
 
 `percentageScroll` value should be greater than 30% (0.3) and less than 100% (1.0). If you will try to set the value bellow or above allowed percentage it will set to 30% and 100% respectively.
-
-## License
-
-**Pagination** is available under the MIT license.
 
 ## Author
 
