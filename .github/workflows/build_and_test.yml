@@ -2,11 +2,11 @@ name: Build and Test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 env:
-  SCHEME: MyFirstSwiftPackage
-  TEST_DEVICE: platform=iOS Simulator,name=iPhone 14,OS=16.2
+  SCHEME: Pagination
+  TEST_DEVICE: platform=iOS Simulator,name=iPhone 15,OS=17.2
 
 jobs:
   build:
