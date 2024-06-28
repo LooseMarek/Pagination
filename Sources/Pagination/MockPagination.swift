@@ -22,7 +22,7 @@ public class MockPagination: PaginationProtocol {
     
     public var mockCanLoadNextPage: Bool = false
     
-    public var page: Int = -1
+    public var page: Int?
     
     public init() {}
     

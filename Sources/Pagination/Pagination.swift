@@ -7,7 +7,7 @@
 //
 
 public protocol PaginationProtocol {
-    var page: Int { get }
+    var page: Int? { get }
     
     func setTotalPages(_ totalPages: Int)
     func setPercentageScrollToLoadNextPage(_ percentageScroll: Double)
@@ -27,13 +27,13 @@ public class Pagination: PaginationProtocol {
     private let minPercentageScrollToLoadNextPage: Double = 0.3
     private let maxPercentageScrollToLoadNextPage: Double = 1.0
     
-    public var page: Int = 0
-    private var totalPages: Int = 0
+    public var page: Int?
+    private var totalPages: Int?
     /**
      List position to allow for loading the next page. Default set to 70%.
      */
     private(set) var percentageScrollToLoadNextPage: Double = 0.7
-    private var isLoading: Bool = false
+    private var isLoading = false
     
     // MARK: - Init
     
@@ -49,21 +49,9 @@ public class Pagination: PaginationProtocol {
      Setting it bellow or above allowed percentage will set it to min and max allowed value respectively.
      */
     public func setPercentageScrollToLoadNextPage(_ percentageScroll: Double) {
-        let isPercentageScrollBellowAllowed: Bool = percentageScroll < minPercentageScrollToLoadNextPage
-        
-        if (isPercentageScrollBellowAllowed) {
-            self.percentageScrollToLoadNextPage = minPercentageScrollToLoadNextPage
-            return
-        }
-        
-        let isPercentageScrollAboveAllowed: Bool = percentageScroll > maxPercentageScrollToLoadNextPage
-        
-        if (isPercentageScrollAboveAllowed) {
-            self.percentageScrollToLoadNextPage = maxPercentageScrollToLoadNextPage
-            return
-        }
-        
-        self.percentageScrollToLoadNextPage = percentageScroll
+        let isPercentageScrollBellowAllowed = percentageScroll < minPercentageScrollToLoadNextPage
+        let isPercentageScrollAboveAllowed = percentageScroll > maxPercentageScrollToLoadNextPage
+        percentageScrollToLoadNextPage = isPercentageScrollBellowAllowed ? minPercentageScrollToLoadNextPage : (isPercentageScrollAboveAllowed ? maxPercentageScrollToLoadNextPage : percentageScroll)
     }
     
     /**
@@ -75,36 +63,23 @@ public class Pagination: PaginationProtocol {
      - `totalPagesNotSet`: when totalPages wasn't set after initial fetch
      */
     public func canLoadNextPage(at index: Int, listCount: Int) throws -> Bool {
-        let didLoadFirstPage: Bool = page != 0
+        guard let page else { throw PaginationError.firstPageNotLoaded }
+        guard let totalPages else { throw PaginationError.totalPagesNotSet }
         
-        if (!didLoadFirstPage) {
-            throw PaginationError.firstPageNotLoaded
-        }
+        if isLoading { return false }
         
-        let isTotalPagesSet: Bool = totalPages != 0
+        let isLastPage = page == totalPages
         
-        if (!isTotalPagesSet) {
-            throw PaginationError.totalPagesNotSet
-        }
+        if isLastPage { return false }
         
-        if (isLoading) {
-            return false
-        }
-        
-        let isLastPage: Bool = page == totalPages
-        
-        if (isLastPage) {
-            return false
-        }
-        
-        let triggerIndex: Int = Int(Double(listCount) * percentageScrollToLoadNextPage)
-        let didScrollAboveTriggerIndex: Bool = index >= triggerIndex
+        let triggerIndex = Int(Double(listCount) * percentageScrollToLoadNextPage)
+        let didScrollAboveTriggerIndex = index >= triggerIndex
         
         return didScrollAboveTriggerIndex
     }
     
     public func loadNextPage() {
-        page = page + 1
+        page = (page ?? 0) + 1
         isLoading = true
     }
     
